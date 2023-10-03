@@ -43,18 +43,17 @@ public class Reservation {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public String updateDates(Date checkIn, Date checkOut) {
+    public void updateDates(Date checkIn, Date checkOut) throws Domainexception {
         Date now = new Date();
 
         if (checkIn.before(now)) {
-            return "reservation date for update must be futures date";
+            throw new Domainexception("reservation date for update must be futures date");
         }
         if (!checkOut.after(checkIn)) {
-            return "check-out date must be after check-in date.";
+            throw new Domainexception("check-out date must be after check-in date.");
         }
         this.checkin = checkIn;
         this.checkout = checkOut;
-        return null;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class Reservation {
                 sdf.format(checkout) +
                 ", " +
                 duration() +
-                " nigths";
+                " nights";
 
     }
 
